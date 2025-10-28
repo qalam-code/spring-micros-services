@@ -1,0 +1,29 @@
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health, info, metrics, prometheus, circuitbreakers, circuitbreakerevents
+    endpoint:
+        health:
+            show-details: always
+    metrics:
+        enable:
+            http.server.requests: true
+    health:
+        circuitbreakers:
+            enabled: true
+
+spring:
+  boot:
+    admin:
+      client:
+            url: http://localhost:8889  # Admin Server URL
+            register: true
+
+resilience4j:
+    circuitbreaker:
+        instances:
+            trafficCB:
+                slidingWindowSize: 10
+                failureRateThreshold: 50
+                waitDurationInOpenState: 10s
